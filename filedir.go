@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 )
 
+/* Path */
 func PathBaseName(filePath string) string {
 	return filepath.Base(filePath)
 }
@@ -21,6 +22,7 @@ func PathIsExist(path string) bool {
 	return false
 }
 
+/* File */
 func FileCreateWithPath(fullPath string) error {
 	file, err := os.Create(fullPath)
 	if err != nil {
@@ -28,6 +30,56 @@ func FileCreateWithPath(fullPath string) error {
 	}
 	defer file.Close()
 	return err
+}
+
+func FileIsWriteable(path string) (isWritable bool) {
+	isWritable = false
+
+	if file, err := os.OpenFile(path, os.O_WRONLY, 0666); err == nil {
+		defer file.Close()
+		isWritable = true
+	} else {
+		if os.IsPermission(err) {
+			return false
+		}
+	}
+	return
+}
+
+/* cp date-time modify from dst file to src file */
+func FileCloneDate(dst, src string) bool {
+	var err error
+	var srcinfo os.FileInfo
+	if srcinfo, err = os.Stat(src); err == nil {
+		if err = os.Chtimes(dst, srcinfo.ModTime(), srcinfo.ModTime()); err == nil {
+			return true
+		}
+	}
+	//	fmt.Errorf("Cannot clone date file ", err)
+	return false
+}
+
+/* list all dir child (1 level) */
+func FileAllChild(directory string) (err error) {
+	dirRead, _ := os.Open(directory)
+	dirFiles, _ := dirRead.Readdir(0)
+	for index := range dirFiles {
+		fileHere := dirFiles[index]
+
+		// Get name of file and its full path.
+		nameHere := fileHere.Name()
+		fullPath := directory + nameHere
+
+		// Remove the file.
+		os.Remove(fullPath)
+		fmt.Println("Removed file:", fullPath)
+	}
+	return nil
+}
+
+// removeFile removes the specified file. Errors are ignored.
+func FileRemoveFile(path string) error {
+	return os.Remove(path)
 }
 
 func FileCopy(src, dst string) (int64, error) {
@@ -59,6 +111,7 @@ func FileCopy(src, dst string) (int64, error) {
 	return nBytes, err
 }
 
+/* Dir */
 func DirCreate(dirPath string, permission fs.FileMode) error {
 	dirFullPath := dirPath
 	if _, err := os.Stat(dirFullPath); err == nil {
