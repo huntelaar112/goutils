@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/usualTasks.iml" filepath="$PROJECT_DIR$/.idea/usualTasks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/goutils.iml" filepath="$PROJECT_DIR$/.idea/goutils.iml" />
     </modules>
   </component>
 </project>
