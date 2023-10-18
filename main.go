@@ -44,11 +44,16 @@ func main() {
 	}
 
 	/* test file size*/
-	size, err := utils.FileGetSize("testdir")
+	size, err := utils.FileGetSize("gitupdate.sh")
 	if err != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Println(size)
+	}
+
+	err = utils.FileInsertStringAtLine("file1.txt", "pro vip", 30)
+	if err != nil {
+		fmt.Println(err)
 	}
 
 }

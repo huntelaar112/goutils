@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"bufio"
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
@@ -9,9 +11,27 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 )
+
+var (
+	GOOS       = runtime.GOARCH
+	AppName    string
+	AppVersion string
+	NEWLINE    = "\n"
+	Ipv4Regex  = `([0-9]+\.){3}[0-9]+`
+)
+
+func init() {
+	GOOS := runtime.GOOS
+	if GOOS != "windows" {
+		NEWLINE = "\r\n"
+	} else if GOOS != "darwin" {
+		NEWLINE = "\r"
+	}
+}
 
 /*
 Path
@@ -164,6 +184,32 @@ func FileRemoveFile(path string) error {
 	return os.Remove(path)
 }
 
+/* only read filesize, not dir*/
+func FileGetSize(filepath string) (int64, error) {
+	fi, err := os.Stat(filepath)
+	if err != nil {
+		return 0, err
+	}
+	// get the size
+	return fi.Size(), nil
+}
+
+/* write content to file if it different with exist file content*/
+func FileWriteStringIfChange(pathfile string, contents []byte) (bool, error) {
+
+	oldContents := []byte{}
+	if _, err := os.Stat(pathfile); err == nil {
+		oldContents, _ = ioutil.ReadFile(pathfile)
+	}
+
+	if bytes.Compare(oldContents, contents) != 0 {
+		return true, ioutil.WriteFile(pathfile, contents, 0644)
+	} else {
+		return false, nil
+	}
+}
+
+/* cp source to dir, keep modify time */
 func FileCopy(src, dst string) (int64, error) {
 	sourceFileStat, err := os.Stat(src)
 	if err != nil {
@@ -193,14 +239,46 @@ func FileCopy(src, dst string) (int64, error) {
 	return nBytes, err
 }
 
-/* only read filesize, not dir*/
-func FileGetSize(filepath string) (int64, error) {
-	fi, err := os.Stat(filepath)
+/* insert string at index lines of file, if this line have text, push it one line down. */
+func FileInsertStringAtLine(filePath, str string, index int) error {
+	NEWLINE := "\n"
+	f, err := os.Open(filePath)
 	if err != nil {
-		return 0, err
+		return err
 	}
-	// get the size
-	return fi.Size(), nil
+	defer f.Close()
+	str = str + NEWLINE //add newline
+	scanner := bufio.NewScanner(f)
+	lines := ""
+	linenum := 0
+	inserted := false
+	for scanner.Scan() {
+		linenum = linenum + 1
+		if linenum == index {
+			inserted = true
+			lines = lines + str
+		}
+		lines = lines + scanner.Text() + NEWLINE
+	}
+
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+
+	if !inserted {
+		if index == -1 {
+			index = linenum + 1
+		}
+		for i := linenum + 1; i < index; i++ {
+			lines = lines + NEWLINE
+		}
+		lines = lines + str
+	}
+	info, err := os.Stat(filePath)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(filePath, []byte(lines), info.Mode().Perm())
 }
 
 /*
@@ -254,4 +332,23 @@ func DirAllChild(directory string) (files []string, err error) {
 		// Remove the file.
 	}
 	return files, err
+}
+
+func DirRemoveContents(dir string) error {
+	d, err := os.Open(dir)
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+	names, err := d.Readdirnames(-1)
+	if err != nil {
+		return err
+	}
+	for _, name := range names {
+		err = os.RemoveAll(filepath.Join(dir, name))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
