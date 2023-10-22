@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"goutils/utils"
 	"os"
 	"path/filepath"
@@ -56,4 +57,43 @@ func main() {
 		fmt.Println(err)
 	}
 
+	/* test dir remove content */
+	err = utils.DirRemoveContents("testdir1")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	/*GenerateRandomBytes*/
+	randbytes, err := utils.GenerateRandomBytes(5)
+	fmt.Println(randbytes)
+
+	/* linux cat*/
+	_, err = utils.FileCreateWithContent("testfile.txt", []byte("you know the rest\n"))
+	if err != nil {
+		log.Error(err)
+	}
+	err = utils.Cat("testfile.txt", "gitupdate.sh")
+	if err != nil {
+		log.Error(err)
+	}
+
+	/*ID*/
+	teststr := utils.GenerateID()
+	log.Info(teststr)
+	teststr, err = utils.GenerateIdv4("")
+	log.Info(teststr)
+
+	/* which */
+	fipath, isexist := utils.Which("/usr/bin/ssh", os.Getenv("PATH"))
+	log.Info(fipath, ", status: ", isexist)
+
+	/*PathGetEnvPathValue*/
+	log.Info(utils.PATHGetEnvPathValue())
+
+	_, err = os.Create(utils.FileTempCreateInNewTemDir("file.txt"))
+	log.Info("Create temp file name: ", utils.FileTempCreateInNewTemDir("file.txt"))
+
+	log.Info("Sha1 of \"mannk-dz\" is: ", utils.GenerateSha1Bytes([]byte("mannk-dz")))
+
+	log.Info("Create toke sha1 timestamp: ", utils.GenerateTokenSha1(1998))
 }

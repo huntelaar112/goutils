@@ -67,6 +67,65 @@ func PathIsDir(path string) bool {
 	return false
 }
 
+/* add data to PATH , vd: /home/mannk:path */
+func PATHJointList(PATH, data string) string {
+	//	data = data + string(os.PathSeparator)
+	if len(PATH) == 0 {
+		return data
+	}
+	return PATH + string(os.PathListSeparator) + data
+	//	filepath.ListSeparator
+}
+
+/* remove addpath from path*/
+func PATHRemove(PATH, addpath string) string {
+	if len(PATH) == 0 {
+		return ""
+	}
+	newpath := ""
+	for i, val := range strings.Split(PATH, string(os.PathListSeparator)) {
+		if !(val == addpath) {
+			if i == 0 {
+				newpath = val
+			} else {
+				newpath = newpath + string(os.PathListSeparator) + val
+			}
+		}
+	}
+	return newpath
+	//	filepath.ListSeparator
+}
+
+func PATHGetEnvPathValue() string {
+	for _, pathname := range []string{"PATH", "path"} {
+		path := os.Getenv(pathname)
+		if len(path) != 0 {
+			return path
+		}
+	}
+	return ""
+}
+
+/* return PATH as array (:)*/
+func PATHArr() []string {
+	envs := PATHGetEnvPathValue()
+	if len(envs) != 0 {
+		return strings.Split(envs, string(os.PathListSeparator))
+	}
+	return []string{}
+}
+
+/* retur path or PATH*/
+func PathGetEnvPathKey() string {
+	for _, pathname := range []string{"PATH", "path"} {
+		path := os.Getenv(pathname)
+		if len(path) != 0 {
+			return pathname
+		}
+	}
+	return ""
+}
+
 /*
 File
 */
@@ -281,6 +340,32 @@ func FileInsertStringAtLine(filePath, str string, index int) error {
 	return ioutil.WriteFile(filePath, []byte(lines), info.Mode().Perm())
 }
 
+/* create tempdir and return tempfile in tempdir (not create yet)*/
+func FileTempCreateInNewTemDir(filename string) string {
+
+	rootdir, err := ioutil.TempDir("", "system")
+	if err != nil {
+		return ""
+	} else {
+		//			defer os.RemoveAll(dir)
+	}
+	return filepath.Join(rootdir, filename)
+}
+
+func FileTempCreateInNewTemDirWithContent(filename string, data []byte) string {
+	rootdir, err := ioutil.TempDir("", "system")
+	if err != nil {
+		return ""
+	}
+	fPath := filepath.Join(rootdir, filename)
+	err = os.WriteFile(fPath, data, 0755)
+	if err != nil {
+		os.RemoveAll(rootdir)
+		return ""
+	}
+	return fPath
+}
+
 /*
 Dir
 */
@@ -334,6 +419,7 @@ func DirAllChild(directory string) (files []string, err error) {
 	return files, err
 }
 
+/* Remove all content of dir */
 func DirRemoveContents(dir string) error {
 	d, err := os.Open(dir)
 	if err != nil {
