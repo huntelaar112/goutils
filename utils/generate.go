@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"encoding/base64"
 	"encoding/hex"
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/rs/xid"
 	"strconv"
@@ -61,9 +62,11 @@ func GenerateTokenSha1(key int) string {
 		key = 1998
 	}
 	nowtimestam := time.Now().Unix() + int64(key)
+	fmt.Print(nowtimestam)
 	return GenerateSha1String(Int64ToString(nowtimestam))
 }
 
+/* compare token (15s limit between create and check) (ex: http post and response confrim)*/
 func TokenSha1IsMatch(key int, token string) bool {
 	if key == 0 {
 		key = 1998
@@ -71,6 +74,8 @@ func TokenSha1IsMatch(key int, token string) bool {
 	nowtimestam := time.Now().Unix() + int64(key)
 	for i := -15; i < 15; i++ {
 		if token == GenerateSha1String(strconv.FormatInt((nowtimestam+int64(i)), 10)) {
+			fmt.Println(strconv.FormatInt((nowtimestam + int64(i)), 10))
+			fmt.Println(token)
 			return true
 		}
 	}

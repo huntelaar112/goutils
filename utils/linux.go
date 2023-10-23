@@ -5,6 +5,7 @@ import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io"
+	"io/ioutil"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -93,6 +94,25 @@ func Which(filePath, PATH string) (string, bool) {
 	return "", false
 }
 
+func Cp(sourceFile, destinationFile string) bool {
+	input, err := ioutil.ReadFile(sourceFile)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+
+	err = ioutil.WriteFile(destinationFile, input, 0644)
+	if err != nil {
+		log.Println("Error creating", destinationFile)
+		log.Println(err)
+		return false
+	}
+	return true
+}
+
+/*
+Container
+*/
 func matchContainerIDWithHostname(lines string) string {
 	hostname := os.Getenv("HOSTNAME")
 	re := regexp.MustCompilePOSIX("^[[:alnum:]]{12}$")

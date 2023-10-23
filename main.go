@@ -95,5 +95,20 @@ func main() {
 
 	log.Info("Sha1 of \"mannk-dz\" is: ", utils.GenerateSha1Bytes([]byte("mannk-dz")))
 
-	log.Info("Create toke sha1 timestamp: ", utils.GenerateTokenSha1(1998))
+	tokensha1 := utils.GenerateTokenSha1(1998)
+	log.Info("Create toke sha1 timestamp: ", tokensha1)
+	//time.Sleep(15 * time.Second)
+	log.Info(utils.TokenSha1IsMatch(1998, tokensha1))
+
+	check := utils.Cp("gitupdate.sh", filepath.Join(".", "testdir", "gitupdate.sh"))
+	if check {
+		log.Info("Cp success.")
+	}
+
+	lines := utils.String2lines("we do thee right thing\n and that is")
+	log.Info(lines)
+
+	stringarr, _ := utils.File2lines("gitupdate.sh")
+	log.Info(stringarr)
+	log.Info(stringarr[1])
 }
