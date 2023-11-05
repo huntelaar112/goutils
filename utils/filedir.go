@@ -366,42 +366,37 @@ func FileTempCreateInNewTemDirWithContent(filename string, data []byte) string {
 	return fPath
 }
 
-func String2lines(str string) []string {
-	scanner := bufio.NewScanner(strings.NewReader(str))
+func walk(filename string, linkDirname string, walkFn filepath.WalkFunc) error {
+	symWalkFunc := func(path string, info os.FileInfo, err error) error {
 
-	var lines []string
+		if fname, err := filepath.Rel(filename, path); err == nil {
+			path = filepath.Join(linkDirname, fname)
+		} else {
+			return err
+		}
 
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		if err == nil && info.Mode()&os.ModeSymlink == os.ModeSymlink {
+			finalPath, err := filepath.EvalSymlinks(path)
+			if err != nil {
+				return err
+			}
+			info, err := os.Lstat(finalPath)
+			if err != nil {
+				return walkFn(path, info, err)
+			}
+			if info.IsDir() {
+				return walk(finalPath, path, walkFn)
+			}
+		}
+
+		return walkFn(path, info, err)
 	}
-
-	if err := scanner.Err(); err != nil {
-		return []string{}
-	}
-
-	return lines
+	return filepath.Walk(filename, symWalkFunc)
 }
 
-func File2lines(filePath string) ([]string, error) {
-	f, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-	return LinesFromReader(f)
-}
-
-func LinesFromReader(r io.Reader) ([]string, error) {
-	var lines []string
-	scanner := bufio.NewScanner(r)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		return nil, err
-	}
-
-	return lines, nil
+// Walk extends filepath.Walk to also follow symlinks
+func SymWalk(path string, walkFn filepath.WalkFunc) error {
+	return walk(path, path, walkFn)
 }
 
 /*

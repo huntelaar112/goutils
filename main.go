@@ -111,4 +111,13 @@ func main() {
 	stringarr, _ := utils.File2lines("gitupdate.sh")
 	log.Info(stringarr)
 	log.Info(stringarr[1])
+
+	multiline := `line \n
+by line
+and line
+after line`
+	strarray := utils.String2lines(multiline)
+	for i, str := range strarray {
+		fmt.Println("index", i, ":", str)
+	}
 }

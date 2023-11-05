@@ -8,9 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/file1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/file1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/conv.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/conv.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/filedir.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/filedir.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/generate.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/generate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/linux.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/linux.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
