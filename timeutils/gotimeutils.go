@@ -23,6 +23,7 @@ func GetTimeStamp() string {
 	t := time.Now().In(loc)
 	return t.Format("20060102150405")
 }
+
 func GetTodaysDate() string {
 	loc, _ := time.LoadLocation("America/Los_Angeles")
 	current_time := time.Now().In(loc)

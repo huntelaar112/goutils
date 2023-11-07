@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
+	"goutils/timeutils"
 	"goutils/utils"
 	"os"
 	"path/filepath"
@@ -120,4 +121,13 @@ after line`
 	for i, str := range strarray {
 		fmt.Println("index", i, ":", str)
 	}
+
+	fmt.Println("************************************* time test")
+	fmt.Println("get time stamp: ", timeutils.GetTimeStamp())
+	fmt.Println("- convert time stamp to local")
+	timestamp := timeutils.GetTimeStamp()
+	fmt.Println(timeutils.ConvetTimestamsToLocalTime(utils.String2Int64(timestamp)))
+	fmt.Println("- time now UTC: ", timeutils.TimeNowUTC())
+	fmt.Println("- get to day date:", timeutils.GetTodaysDate())
+
 }

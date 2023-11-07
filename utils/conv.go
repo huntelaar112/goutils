@@ -5,6 +5,7 @@ import (
 	"io"
 	"math/big"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -18,6 +19,11 @@ func Int64ToString(number int64) string {
 	big := new(big.Int)
 	big.SetInt64(number)
 	return big.String()
+}
+
+func String2Int64(str string) int64 {
+	int64Value, _ := strconv.ParseInt(str, 10, 64)
+	return int64Value
 }
 
 /* return []string, sperate by endline */

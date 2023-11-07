@@ -2,9 +2,11 @@ package timeutils
 
 import (
 	"fmt"
-	"github.com/sonnt85/gosutils/endec"
+
 	"time"
 )
+
+//"github.com/sonnt85/gosutils/endec"
 
 type SleepStep struct {
 	sleepDuration  time.Duration
@@ -25,14 +27,14 @@ func NewSleepStep(step, min, max time.Duration) *SleepStep {
 	}
 }
 
-func (ss *SleepStep) Sleep() {
+/*func (ss *SleepStep) Sleep() {
 	ss.sleepDuration = time.Duration(ss.sleepDuration.Nanoseconds() + endec.RandRangeInt64(0, int64(ss.step.Nanoseconds())))
 	if ss.sleepDuration >= ss.max {
 		ss.sleepDuration = ss.min
 	}
 
 	time.Sleep(ss.sleepDuration)
-}
+}*/
 
 func NewTickerStep(step, min, max time.Duration) *TickerStep {
 	return &TickerStep{
@@ -48,7 +50,7 @@ func (ss *TickerStep) C() <-chan time.Time {
 	return ss.ticker.C
 }
 
-func (ss *TickerStep) Update() {
+/*func (ss *TickerStep) Update() {
 	ss.sleepDuration = time.Duration(ss.sleepDuration.Nanoseconds() + endec.RandRangeInt64(0, int64(ss.step.Nanoseconds())))
 	if ss.sleepDuration >= ss.max {
 		ss.sleepDuration = ss.min
@@ -64,7 +66,7 @@ func SleepRandRange(mind, maxd time.Duration) {
 // sleep random from 0 to max duration
 func SleepRandMax(d time.Duration) {
 	SleepRandRange(0, d)
-}
+}*/
 
 const day = time.Minute * 60 * 24
 

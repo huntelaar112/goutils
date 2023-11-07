@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f1b8ccd-ca37-4855-bf08-c112e44a7629" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/timeutils/gotimeutils.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timeutils/sleep.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timeutils/utils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/file1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeutils/gotimeutils.go" beforeDir="false" afterPath="$PROJECT_DIR$/timeutils/gotimeutils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timeutils/sleep.go" beforeDir="false" afterPath="$PROJECT_DIR$/timeutils/sleep.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/conv.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/conv.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
