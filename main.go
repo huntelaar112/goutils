@@ -123,11 +123,11 @@ after line`
 	}
 
 	fmt.Println("************************************* time test")
-	fmt.Println("get time stamp: ", timeutils.GetTimeStamp())
+	fmt.Println("get time stamp: ", timeutils.GetTimeStamp("Asia/Ho_Chi_Minh"))
 	fmt.Println("- convert time stamp to local")
-	timestamp := timeutils.GetTimeStamp()
+	timestamp := timeutils.GetTimeStamp("Asia/Ho_Chi_Minh")
 	fmt.Println(timeutils.ConvetTimestamsToLocalTime(utils.String2Int64(timestamp)))
 	fmt.Println("- time now UTC: ", timeutils.TimeNowUTC())
-	fmt.Println("- get to day date:", timeutils.GetTodaysDate())
-
+	fmt.Println("- get to day date:", timeutils.GetTodaysDate("Asia/Ho_Chi_Minh"))
+	fmt.Println("get today datetime format: ", timeutils.GetTodaysDateTimeFormatted("Asia/Ho_Chi_Minh"))
 }

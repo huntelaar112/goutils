@@ -18,26 +18,29 @@ func TimeNowUTC() string {
 	return fmt.Sprintf("%s %s", tar[0], tar[1])
 }
 
-func GetTimeStamp() string {
-	loc, _ := time.LoadLocation("America/Los_Angeles")
+// Asia/Ho_Chi_Minh
+// America/Los_Angeles
+
+func GetTimeStamp(location string) string {
+	loc, _ := time.LoadLocation(location)
 	t := time.Now().In(loc)
 	return t.Format("20060102150405")
 }
 
-func GetTodaysDate() string {
-	loc, _ := time.LoadLocation("America/Los_Angeles")
+func GetTodaysDate(location string) string {
+	loc, _ := time.LoadLocation(location)
 	current_time := time.Now().In(loc)
 	return current_time.Format("2006-01-02")
 }
 
-func GetTodaysDateTime() string {
-	loc, _ := time.LoadLocation("America/Los_Angeles")
+func GetTodaysDateTime(location string) string {
+	loc, _ := time.LoadLocation(location)
 	current_time := time.Now().In(loc)
 	return current_time.Format("2006-01-02 15:04:05")
 }
 
-func GetTodaysDateTimeFormatted() string {
-	loc, _ := time.LoadLocation("America/Los_Angeles")
+func GetTodaysDateTimeFormatted(location string) string {
+	loc, _ := time.LoadLocation(location)
 	current_time := time.Now().In(loc)
 	return current_time.Format("Jan 2, 2006 at 3:04 PM")
 }
