@@ -1,4 +1,4 @@
-## How to use sched?
+## How to use go sched?
 ```go
 package main
 
@@ -33,14 +33,14 @@ By specifying the chain of calls, a `Job` struct is instantiated and a goroutine
 
 The goroutine will be on pause until:
 * The next run scheduled is due. This will cause to execute the job.
-* The `SkipWait` channel is activated. This will cause to execute the job.
+* The `skipWait` channel is activated. This will cause to execute the job.
 * The `Quit` channel is activated. This will cause to finish the job.
 
 ## Not immediate recurrent jobs
 By default the behaviour of the recurrent jobs (Every(N) seconds, minutes, hours) is to start executing the job right away and then wait the required amount of time. By calling specifically `.NotImmediately()` you can override that behaviour and not execute it directly when the function `Run()` is called.
 
 ```go
-scheduler.Every(5).EMinutes().NotImmediately().Run(job)
+sched.Every(5).EMinutes().NotImmediately().Run(job)
 ```
 
 ## License
