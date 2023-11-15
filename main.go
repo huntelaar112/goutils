@@ -3,14 +3,17 @@ package main
 import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
+	"goutils/sched"
 	"goutils/timeutils"
 	"goutils/utils"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 func main() {
 	/* test write able*/
+	fmt.Println("************************************* file dir gen test")
 	path := filepath.Join(".", "README.md")
 	if utils.FileIsWriteable(path) {
 		fmt.Println("write able yes")
@@ -30,7 +33,7 @@ func main() {
 	}
 
 	/*file hast md5*/
-	returnMD5String, err := utils.FileHashMd5("file1.txt")
+	returnMD5String, err := utils.FileHashMd5("testdir/file1")
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -38,7 +41,7 @@ func main() {
 	}
 
 	/*test file wait content*/
-	content, err := utils.FileWaitContentsAndRead("testfile.txt", 10000)
+	content, err := utils.FileWaitContentsAndRead("testdir/file1", 10000)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -53,7 +56,7 @@ func main() {
 		fmt.Println(size)
 	}
 
-	err = utils.FileInsertStringAtLine("file1.txt", "pro vip", 30)
+	err = utils.FileInsertStringAtLine("testdir/file1", "pro vip", 30)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -69,11 +72,11 @@ func main() {
 	fmt.Println(randbytes)
 
 	/* linux cat*/
-	_, err = utils.FileCreateWithContent("testfile.txt", []byte("you know the rest\n"))
+	_, err = utils.FileCreateWithContent("testdir/testfile.txt", []byte("you know the rest\n"))
 	if err != nil {
 		log.Error(err)
 	}
-	err = utils.Cat("testfile.txt", "gitupdate.sh")
+	err = utils.Cat("testdir/testfile.txt", "gitupdate.sh")
 	if err != nil {
 		log.Error(err)
 	}
@@ -130,4 +133,25 @@ after line`
 	fmt.Println("- time now UTC: ", timeutils.TimeNowUTC())
 	fmt.Println("- get to day date:", timeutils.GetTodaysDate("Asia/Ho_Chi_Minh"))
 	fmt.Println("get today datetime format: ", timeutils.GetTodaysDateTimeFormatted("Asia/Ho_Chi_Minh"))
+
+	fmt.Println("************************************* sched test")
+	_, err = sched.Every(5).ESeconds().Run(PrintHello)
+	if err != nil {
+		log.Error(err)
+	}
+	_, err = sched.Every(10).ESeconds().Run(PrintBille)
+	if err != nil {
+		log.Error(err)
+	}
+
+	runtime.Goexit()
+}
+
+func PrintHello(job *sched.Job) {
+	log.Info("hmm...")
+	//fmt.Println("Hmm...")
+}
+
+func PrintBille(job *sched.Job) {
+	log.Info("bedder than ever...")
 }

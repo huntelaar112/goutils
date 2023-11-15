@@ -22,24 +22,36 @@ func TimeNowUTC() string {
 // America/Los_Angeles
 
 func GetTimeStamp(location string) string {
+	if location == "" {
+		location = "Asia/Ho_Chi_Minh"
+	}
 	loc, _ := time.LoadLocation(location)
 	t := time.Now().In(loc)
 	return t.Format("20060102150405")
 }
 
 func GetTodaysDate(location string) string {
+	if location == "" {
+		location = "Asia/Ho_Chi_Minh"
+	}
 	loc, _ := time.LoadLocation(location)
 	current_time := time.Now().In(loc)
 	return current_time.Format("2006-01-02")
 }
 
 func GetTodaysDateTime(location string) string {
+	if location == "" {
+		location = "Asia/Ho_Chi_Minh"
+	}
 	loc, _ := time.LoadLocation(location)
 	current_time := time.Now().In(loc)
 	return current_time.Format("2006-01-02 15:04:05")
 }
 
 func GetTodaysDateTimeFormatted(location string) string {
+	if location == "" {
+		location = "Asia/Ho_Chi_Minh"
+	}
 	loc, _ := time.LoadLocation(location)
 	current_time := time.Now().In(loc)
 	return current_time.Format("Jan 2, 2006 at 3:04 PM")

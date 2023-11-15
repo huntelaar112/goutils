@@ -9,6 +9,8 @@ github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/sonnt85/gosutils/endec v0.0.0-20230927031609-2b3046a0b311 h1:L6PstcSjEdsLpRR0I0RBfpS09TSPxi5PVFheolDk3tw=
 github.com/sonnt85/gosutils/endec v0.0.0-20230927031609-2b3046a0b311/go.mod h1:qNGDmf4JmVneavnTP5Z7EKN9tBmQQHxn27pK3AEbkr0=
+github.com/sonnt85/gotimeutils v0.0.0-20221011032526-b825ab5ef455 h1:H53ETzcv6323KZovAEqGpmwltJ2vvvZ1f6nutj2ZIzk=
+github.com/sonnt85/gotimeutils v0.0.0-20221011032526-b825ab5ef455/go.mod h1:ZLvJwdHy5vUYcsedjKUsWmdIrZseb5xRU+XZGxS5fls=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 golang.org/x/crypto v0.15.0 h1:frVn1TEaCEaZcn3Tmd7Y2b5KKPaZ+I32Q2OA3kYp5TA=
