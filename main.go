@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/hunterlarr112/goutils/sched"
+	"github.com/hunterlarr112/goutils/timeutils"
+	"github.com/hunterlarr112/goutils/utils"
 	log "github.com/sirupsen/logrus"
-	"goutils/sched"
-	"goutils/timeutils"
-	"goutils/utils"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -13,7 +13,6 @@ import (
 
 func main() {
 	/* test write able*/
-	fmt.Println("************************************* file dir gen test")
 	path := filepath.Join(".", "README.md")
 	if utils.FileIsWriteable(path) {
 		fmt.Println("write able yes")
