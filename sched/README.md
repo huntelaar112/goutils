@@ -20,8 +20,8 @@ func main() {
       
       // Run now and every X.
 	sched.Every(5).EMinutes().Run(job)
-	sched.Every().Day().Run(job)
-	sched.Every().Monday().At("08:30").Run(job)
+	sched.Every().EDay().Run(job)
+	sched.Every(10).WThursday().At("08:30").Run(PrintHello)
       
       // Keep the program from not exiting.
 	runtime.Goexit()

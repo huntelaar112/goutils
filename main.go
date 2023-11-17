@@ -142,7 +142,10 @@ after line`
 	if err != nil {
 		log.Error(err)
 	}
-
+	/*	_, err = sched.Every(10).WFriday().At("14:51").Run(PrintYes)
+		if err != nil {
+			log.Error(err)
+		}*/
 	runtime.Goexit()
 }
 
@@ -153,4 +156,9 @@ func PrintHello(job *sched.Job) {
 
 func PrintBille(job *sched.Job) {
 	log.Info("bedder than ever...")
+}
+
+func PrintYes(job *sched.Job) {
+	log.Info("yes...")
+	//fmt.Println("Hmm...")
 }
