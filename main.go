@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/hunterlarr112/goutils/sched"
-	"github.com/hunterlarr112/goutils/timeutils"
-	"github.com/hunterlarr112/goutils/utils"
+	"github.com/huntelaar112/goutils/sched"
+	"github.com/huntelaar112/goutils/timeutils"
+	"github.com/huntelaar112/goutils/utils"
 	log "github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
