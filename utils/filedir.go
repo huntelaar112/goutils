@@ -148,6 +148,14 @@ func FileCreateWithContent(fullPath string, data []byte) (bytewrite int, err err
 	return n, err
 }
 
+func FileReadAll(fullPath string) (string, error) {
+	content, err := ioutil.ReadFile(fullPath)
+	if err != nil {
+		return "", err
+	}
+	return string(content), err
+}
+
 func FileIsWriteable(path string) (isWritable bool) {
 	isWritable = false
 
