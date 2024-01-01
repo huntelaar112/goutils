@@ -140,12 +140,33 @@ func FileCreate(fullPath string) error {
 
 func FileCreateWithContent(fullPath string, data []byte) (bytewrite int, err error) {
 	file, err := os.Create(fullPath)
+	if err != nil {
+		return 0, err
+	}
 	defer file.Close()
 	if err != nil {
 		return 0, err
 	}
 	n, err := file.Write(data)
 	return n, err
+}
+
+func FileOpen2Write(fullPath string) (*os.File, error) {
+	// create dir to path if it is not exist
+	err := DirCreate(filepath.Dir(fullPath), 0775)
+	if err != nil {
+		return nil, err
+	}
+	// create file or truncate if it existed
+	err = FileCreate(fullPath)
+	if err != nil {
+		return nil, err
+	}
+	logf, err := os.OpenFile(fullPath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	if err != nil {
+		return nil, err
+	}
+	return logf, err
 }
 
 func FileReadAll(fullPath string) (string, error) {
@@ -269,7 +290,8 @@ func FileWriteStringIfChange(pathfile string, contents []byte) (bool, error) {
 		oldContents, _ = ioutil.ReadFile(pathfile)
 	}
 
-	if bytes.Compare(oldContents, contents) != 0 {
+	//if bytes.Compare(oldContents, contents) != 0 {
+	if !bytes.Equal(oldContents, contents) {
 		return true, ioutil.WriteFile(pathfile, contents, 0644)
 	} else {
 		return false, nil
