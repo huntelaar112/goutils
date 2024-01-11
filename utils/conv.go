@@ -64,3 +64,12 @@ func Reader2lines(r io.Reader) ([]string, error) {
 
 	return lines, nil
 }
+
+// get n field of string seprate by delimiter string
+func StringGetFirstFields(str string, delimiter string, firstNField uint16) string {
+	// Split the string using the delimiter
+	fields := strings.Split(str, delimiter)
+
+	// Specify the number of fields you want to take from the beginning
+	return strings.Join(fields[:firstNField], delimiter)
+}
