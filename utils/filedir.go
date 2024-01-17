@@ -151,17 +151,21 @@ func FileCreateWithContent(fullPath string, data []byte) (bytewrite int, err err
 	return n, err
 }
 
+// open and attend to file
 func FileOpen2Write(fullPath string) (*os.File, error) {
 	// create dir to path if it is not exist
 	err := DirCreate(filepath.Dir(fullPath), 0775)
 	if err != nil {
 		return nil, err
 	}
-	// create file or truncate if it existed
-	err = FileCreate(fullPath)
-	if err != nil {
-		return nil, err
+	// create file if it not existed
+	if os.Stat(fullPath); err != nil {
+		err = FileCreate(fullPath)
+		if err != nil {
+			return nil, err
+		}
 	}
+
 	logf, err := os.OpenFile(fullPath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		return nil, err
@@ -434,12 +438,12 @@ Dir
 */
 func DirCreate(dirPath string, permission fs.FileMode) error {
 	dirFullPath := dirPath
-	if _, err := os.Stat(dirFullPath); err == nil {
-		if err := os.RemoveAll(dirFullPath); err != nil {
-			//fmt.Println("Error removing existing directory:", err)
-			return err
-		}
-	}
+	// if _, err := os.Stat(dirFullPath); err == nil {
+	// 	if err := os.RemoveAll(dirFullPath); err != nil {
+	// 		//fmt.Println("Error removing existing directory:", err)
+	// 		return err
+	// 	}
+	// }
 	/*err := os.MkdirAll(dirFullPath, os.ModePerm)*/
 	err := os.MkdirAll(dirFullPath, permission)
 	if err != nil {
