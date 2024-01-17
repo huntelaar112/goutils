@@ -134,8 +134,7 @@ func FileCreate(fullPath string) error {
 	if err != nil {
 		return err
 	}
-	defer file.Close()
-	return err
+	return file.Close()
 }
 
 func FileCreateWithContent(fullPath string, data []byte) (bytewrite int, err error) {
@@ -159,7 +158,7 @@ func FileOpen2Write(fullPath string) (*os.File, error) {
 		return nil, err
 	}
 	// create file if it not existed
-	if os.Stat(fullPath); err != nil {
+	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
 		err = FileCreate(fullPath)
 		if err != nil {
 			return nil, err
