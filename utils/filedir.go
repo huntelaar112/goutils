@@ -130,6 +130,18 @@ func PathGetEnvPathKey() string {
 File
 */
 func FileCreate(fullPath string) error {
+	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+		file, err := os.Create(fullPath)
+		if err != nil {
+			return err
+		}
+		return file.Close()
+	} else {
+		return err
+	}
+}
+
+func FileCreateOverwrite(fullPath string) error {
 	file, err := os.Create(fullPath)
 	if err != nil {
 		return err
