@@ -30,3 +30,16 @@ func InitLogger(filePath string, logger *log.Logger, level log.Level) error {
 
 	return err
 }
+
+func InitLoggerStdout(logger *log.Logger, level log.Level) {
+	logger.SetOutput(os.Stdout)
+
+	if level < log.PanicLevel && level > log.TraceLevel {
+		logger.SetLevel(log.InfoLevel)
+	} else {
+		logger.SetLevel(level)
+	}
+
+	logger.SetReportCaller(true)
+	logger.SetFormatter(&log.JSONFormatter{PrettyPrint: false})
+}
