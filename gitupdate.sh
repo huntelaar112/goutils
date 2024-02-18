@@ -1,3 +1,5 @@
+message="${1}"
+
 git add .
-git commit -m "update"
+git commit -m "${message}"
 git push
